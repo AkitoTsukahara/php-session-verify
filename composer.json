@@ -1,0 +1,35 @@
+{
+    "name": "akitotsukahara/php-session-verify",
+    "description": "session_destroy() が3層のどこを消すかをHTTP往復で観察する検証一式",
+    "type": "project",
+    "license": "MIT",
+    "homepage": "https://github.com/AkitoTsukahara/php-session-verify",
+    "authors": [
+        {
+            "name": "AkitoTsukahara",
+            "homepage": "https://github.com/AkitoTsukahara"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "ext-curl": "*",
+        "ext-session": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SessionVerify\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "platform": {
+            "php": "8.3.0"
+        },
+        "sort-packages": true
+    }
+}

@@ -1,0 +1,23 @@
+# セッション保存先（実行時に作られる）
+var/
+
+# ビルトインサーバーのログ
+server.log
+
+# Composer / PHPUnit
+vendor/
+.phpunit.cache/
+
+# 実行時の一時ファイル（現行の run.sh は mktemp を使うが、
+# 旧版で作られたものが残っている場合に備えて）
+jar*.txt
+body.txt
+b3.txt
+
+# エディタ
+.idea/
+.vscode/
+.DS_Store
+
+# 未公開の記事ドラフト。リポジトリに含めたい場合はこの行を削除する
+session_destroy_article_draft.md

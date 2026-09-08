@@ -1,0 +1,22 @@
+# 観察1〜5・補足A/B が「記事どおりに再現する」ことを push ごとに確認する。
+# ローカルと同じ Docker イメージで動かすので、CI とローカルで結果が変わらない。
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t session-verify .
+
+      - name: PHPUnit（観察1〜5・補足A/B を断定）
+        run: docker run --rm session-verify composer test
+
+      - name: run.sh --all（一括再現スクリプトが最後まで通る）
+        run: docker run --rm session-verify bash run.sh --all

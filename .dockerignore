@@ -1,0 +1,10 @@
+.git
+.gitignore
+.idea
+var
+server.log
+vendor
+.phpunit.cache
+.github
+*.md
+!README.md
