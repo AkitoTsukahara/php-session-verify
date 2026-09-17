@@ -53,12 +53,14 @@ final class SessionDestroyObservationsTest extends TestCase
 
         // リクエスト層
         $this->assertNotSame('', $id);
+        $this->assertMatchesRegularExpression('/^[a-f0-9]{32}$/D', $id, 'PHP 8.5 の既定値ではIDは32文字の16進数');
         $this->assertSame(['user_id' => 42, 'role' => 'admin'], $json['session']);
 
         // サーバー層
         $files = self::serverLayer();
         $this->assertArrayHasKey($id, $files, 'sess_<id> のファイルが作られている');
         $this->assertSame('user_id|i:42;role|s:5:"admin";', $files[$id]);
+        $this->assertSame(30, strlen($files[$id]), '記事に表示するセッションファイルの内容は30 bytes');
 
         // クライアント層
         $this->assertSame($id, $this->client->cookies['PHPSESSID'] ?? null);
@@ -117,6 +119,11 @@ final class SessionDestroyObservationsTest extends TestCase
 
         $this->assertSame(1, $json['_env']['use_strict_mode']);
         $this->assertTrue($res->hasSetCookie(), '新IDの Set-Cookie が出る');
+        $this->assertSame(
+            'PHPSESSID=' . $json['session_id'] . '; path=/; HttpOnly; SameSite=Lax',
+            $res->setCookies()[0],
+            'PHP 8.5検証環境のSet-Cookie属性が記事の実測例と一致する'
+        );
         $this->assertNotSame($old, $json['session_id'], '古いIDは採用されない');
         $this->assertSame($json['session_id'], $this->client->cookies['PHPSESSID'], 'ジャーが新IDに置き換わる');
         $this->assertArrayNotHasKey($old, self::serverLayer(), '古いIDのファイルは作られない');
@@ -135,6 +142,11 @@ final class SessionDestroyObservationsTest extends TestCase
         $this->assertCount(1, $setCookies);
         $this->assertStringStartsWith('PHPSESSID=deleted;', $setCookies[0]);
         $this->assertStringContainsString('Max-Age=0', $setCookies[0]);
+        $this->assertSame(
+            'PHPSESSID=deleted; expires=Thu, 01 Jan 1970 00:00:01 GMT; Max-Age=0; path=/; HttpOnly; SameSite=Lax',
+            $setCookies[0],
+            'PHP 8.5検証環境の削除用Set-Cookie属性が記事の実測例と一致する'
+        );
         $this->assertArrayNotHasKey('PHPSESSID', $this->client->cookies, 'ジャーから消える');
 
         // リクエスト層

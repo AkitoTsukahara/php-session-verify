@@ -40,7 +40,6 @@ final class BuiltinServer
             $ch = curl_init($this->baseUrl . '/__ping');
             curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 1]);
             $ok = curl_exec($ch) !== false;
-            curl_close($ch);
             if ($ok) {
                 return;
             }

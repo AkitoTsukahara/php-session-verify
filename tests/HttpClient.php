@@ -43,7 +43,6 @@ final class HttpClient
         }
         $status     = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
         $headerSize = (int) curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-        curl_close($ch);
 
         $headerBlock = substr($raw, 0, $headerSize);
         $body        = substr($raw, $headerSize);

@@ -48,7 +48,7 @@ docker run --rm session-verify composer test
  ✔ 補足A: タイムスタンプ方式の再生成では、旧IDが destroyed 付きで残り新IDが採番される
  ✔ 補足B: 検出側は destroyed マークの経過時間で FRESH / 猶予内 / 猶予超過 に分岐する
 
-OK (7 tests, 45 assertions)
+OK (7 tests, 49 assertions)
 ```
 
 上の一覧表示は `docker run --rm session-verify vendor/bin/phpunit --testdox` で出ます。
@@ -67,10 +67,10 @@ OK (7 tests, 45 assertions)
 ```json
 {
   "endpoint": "me",
-  "session_id": "aq7bhk...",
+  "session_id": "01d9660...",
   "session": { "user_id": 42, "role": "admin" },
   "is_login": true,
-  "_env": { "php": "8.3.33", "use_strict_mode": 0 }
+  "_env": { "php": "8.5.10", "use_strict_mode": 0 }
 }
 ```
 
@@ -83,7 +83,7 @@ OK (7 tests, 45 assertions)
 session-verify/
 ├── run.sh                   # 1コマンドで観察1〜5を再現（--all で 06/07 も）
 ├── show_var.sh              # サーバー層（var/）のセッションファイルを一覧表示
-├── Dockerfile               # php:8.3-cli ベース（curl / composer 込み）
+├── Dockerfile               # php:8.5-cli ベース（curl / composer 込み）
 ├── docker-entrypoint.sh     # コンテナ起動時にビルトインサーバーを自動起動
 ├── composer.json / .lock    # PHPUnit（テスト実行時のみ使用）
 ├── phpunit.xml
@@ -250,5 +250,4 @@ docker run --rm -e PORT=9000 session-verify
 
 ## 検証済み環境
 
-- Docker イメージ: `php:8.3-cli`（実測 PHP 8.3.33）
-- 記事執筆時の検証: PHP 8.3.6（ビルトインサーバー）
+- Docker イメージ: `php:8.5-cli`（実測 PHP 8.5.10）

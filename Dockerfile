@@ -1,5 +1,5 @@
 # =====================================================================
-# session-verify 検証環境（php:8.3-cli ベース）
+# session-verify 検証環境（php:8.5-cli ベース）
 #
 # ビルド:       docker build -t session-verify .
 # 一括検証:     docker run --rm session-verify
@@ -14,10 +14,10 @@
 #
 # サーバーの自動起動は docker-entrypoint.sh が担う。
 #
-# 記事の検証環境は PHP 8.3.6。8.3 系であれば結果は変わりません
+# 記事の検証環境は PHP 8.5.10。
 # （実際に動いたバージョンは各レスポンスの _env.php に出ます）。
 # =====================================================================
-FROM php:8.3-cli
+FROM php:8.5-cli
 
 # curl: run.sh が使う / unzip: composer が配布物を展開するのに使う
 RUN apt-get update \
